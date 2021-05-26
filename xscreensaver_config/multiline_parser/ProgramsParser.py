@@ -7,8 +7,10 @@ class ProgramsParser(IMultilineParser):
     key_name = 'programs'
 
     def _parse_line(self, line: str) -> dict:
-        regex = re.compile(r'^(-|)(?:\s+|)(\S+:|)(?:\s+|)\t{4}(.+?)\t{3,4}\s+\\.+$')
+        regex = re.compile(r'^(-|)(?:\s+|)(\S+:|)(?:\s+|)\t{4}(.+?)\s+$')
         found = regex.match(line)
+        if not found:
+            raise Exception('Failed to parse line {}'.format(line))
         return {
             'enabled': found.group(1) != '-',
             'renderer': found.group(2).rstrip(':'),
@@ -27,11 +29,13 @@ class ProgramsParser(IMultilineParser):
 
         parts.append('\t\t\t\t')
         parts.append(line_data.get('command'))
-        parts.append('\t\t\t    \\n\\')
+        parts.append('\t\t\t    \\n')
 
         return ''.join(parts)
 
-    def parse(self, lines: List[str]) -> List[dict]:
+    def parse(self, multiline_buffer: str) -> List[dict]:
+        # join lines into single string and unescape it and parse lines again
+        lines = multiline_buffer.encode('UTF-8').decode('unicode_escape').splitlines()
         parsed_lines = [self._parse_line(line) for line in lines]
 
         if len(lines) != len(parsed_lines):

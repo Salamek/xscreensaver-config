@@ -7,7 +7,7 @@ class IMultilineParser:
     def key_name(self) -> str:
         raise NotImplementedError
 
-    def parse(self, lines: List[str]) -> List[dict]:
+    def parse(self, multiline_buffer: str) -> List[dict]:
         raise NotImplementedError
 
     def assemble(self, lines_data: List[dict]) -> List[str]:
