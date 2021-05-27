@@ -11,7 +11,7 @@ class ConfigParser:
     data = {}
     multiline_parsers_by_key = {}
 
-    def __init__(self, config_path, multiline_parsers: List[IMultilineParser] = None, app_name: str = 'xscreensaver config parser'):
+    def __init__(self, config_path, multiline_parsers: List[IMultilineParser] = None, app_name: str = 'xscreensaver config parser', ignore_missing_file: bool = False):
         self.config_path = config_path
         self.multiline_parsers = multiline_parsers if multiline_parsers else [ProgramsParser()]
         self.app_name = app_name
@@ -20,8 +20,11 @@ class ConfigParser:
             if not isinstance(multiline_parser, IMultilineParser):
                 raise Exception('{} is not instance of IMultilineParser'.format(multiline_parser))
             self.multiline_parsers_by_key[multiline_parser.key_name] = multiline_parser
-
-        self._load()
+        try:
+            self._load()
+        except FileNotFoundError:
+            if not ignore_missing_file:
+                raise
 
     def _end_multiline(self):
         if self.multiline:
