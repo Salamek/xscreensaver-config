@@ -1,5 +1,5 @@
 pkgname=python-xscreensaver-config
-pkgver=1.0.5
+pkgver=1.0.6
 pkgdesc="Python parser for .xscreensaver config file"
 pkgrel=1
 arch=('any')
