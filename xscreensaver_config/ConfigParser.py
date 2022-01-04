@@ -70,7 +70,7 @@ class ConfigParser:
         lines = [
             '# XScreenSaver Preferences File',
             '# Written by {}.'.format(self.app_name),
-            '# https://github.com/Salamek/chromium-kiosk',
+            '# https://github.com/Salamek/xscreensaver-config',
             ''
         ]
         for key, value in self.data.items():
