@@ -1,6 +1,13 @@
 # xscreensaver_config
 Python parser for .xscreensaver config file
 
+
+## Installation
+
+```
+pip install xscreensaver-config
+```
+
 ```
 from xscreensaver_config.ConfigParser import ConfigParser
 config = ConfigParser('/home/user/.xscreensaver')
